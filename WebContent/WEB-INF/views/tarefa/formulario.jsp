@@ -12,23 +12,28 @@
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<%@taglib prefix="tag" tagdir="/WEB-INF/tags" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<meta lang="en"> 
+<%@taglib prefix="tag" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="fmt" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<meta lang="en">
 <title>formulario</title>
 </head>
 <body>
-	<h1>Adiciona Tarefa</h1>
+	<h1>
+		<spring:message code="tarefa.formulario.titulo" />
+	</h1>
 	<fieldset>
 		<form action="adicionaTarefa" method="post">
-			<!-- <strong><fmt:message key="tarefa.tarefa-formulario.descricao"/></strong><br />-->
-			<strong><spring:message code="tarefa.tarefa-formulario.descricao"></spring:message> </strong>
-			
+			<strong> <spring:message code="tarefa.formulario.descricao" />
+			</strong>
 			<textarea name="descricao" rows="5" cols="100">
 			</textarea>
-			<tag:campoData id="dataFinalizacao"></tag:campoData>
-			<br /> <input type="submit" value="salvar">
+			<br />
+			<strong><spring:message code="tarefa.formulario.data" /></strong>
+			<p><fmt:errors path="tarefa.descricao" /></p>
+			<tag:campoData id="dataFinalizacao"/>
+			<br /> 
+			<input type="submit" value="salvar">
 		</form>
 	</fieldset>
 </body>

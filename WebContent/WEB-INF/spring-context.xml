@@ -24,7 +24,6 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="/WEB-INF/resources/messages"></property>
-		
 	</bean>
 
 	<!-- intercepta mudancas de idioma no cookie -->

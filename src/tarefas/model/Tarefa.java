@@ -2,9 +2,15 @@ package tarefas.model;
 
 import java.util.Calendar;
 
+import javax.validation.constraints.Size;
+
+import com.sun.istack.internal.NotNull;
+
 
 public class Tarefa {
 	private Long id;
+	
+	@NotNull @Size(min=5)
 	private String descricao;
 	private boolean finalizado;
 	private Calendar dataFinalizacao;
