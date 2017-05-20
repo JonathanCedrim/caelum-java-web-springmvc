@@ -26,6 +26,14 @@
 		<property name="basename" value="/WEB-INF/resources/messages"></property>
 	</bean>
 
+	<!-- para encontrar as mensagens de validacao 
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="tarefas/validation/ValidationMessages" />
+	</bean>
+	http://stackoverflow.com/questions/24124799/spring-custom-validation-message
+	-->
+
 	<!-- intercepta mudancas de idioma no cookie -->
 	<bean id="localeChangeInterceptor"
 		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
@@ -44,4 +52,6 @@
 			<ref bean="localeChangeInterceptor" />
 		</property>
 	</bean>
+
+
 </beans>

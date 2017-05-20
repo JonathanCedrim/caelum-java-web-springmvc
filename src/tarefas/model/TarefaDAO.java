@@ -17,7 +17,7 @@ public class TarefaDAO {
 
 	private Connection conn;
 	private PreparedStatement stmt = null;
-	
+
 	public TarefaDAO(Connection conn) {
 		this.conn = conn;
 	}
@@ -172,7 +172,7 @@ public class TarefaDAO {
 		tarefa.setDescricao(rs.getString("descricao"));
 		tarefa.setFinalizado(rs.getBoolean("finalizado"));
 		c.setTime(new Date(rs.getDate("dataFinalizacao").getTime()));
-			
+
 		tarefa.setDataFinalizacao(c);
 
 		return tarefa;

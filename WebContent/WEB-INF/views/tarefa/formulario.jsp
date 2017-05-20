@@ -28,12 +28,13 @@
 			</strong>
 			<textarea name="descricao" rows="5" cols="100">
 			</textarea>
-			<br />
-			<strong><spring:message code="tarefa.formulario.data" /></strong>
-			<p><fmt:errors path="tarefa.descricao" /></p>
-			<tag:campoData id="dataFinalizacao"/>
-			<br /> 
-			<input type="submit" value="salvar">
+			<br /> <strong><spring:message
+					code="tarefa.formulario.data" /></strong>
+			<p>
+				<fmt:errors path="tarefa.descricao" />			
+			</p>
+			<tag:campoData id="dataFinalizacao" />
+			<br /> <input type="submit" value="salvar">
 		</form>
 	</fieldset>
 </body>

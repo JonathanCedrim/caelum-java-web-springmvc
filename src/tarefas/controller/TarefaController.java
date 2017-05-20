@@ -21,18 +21,43 @@ public class TarefaController {
 	@RequestMapping("adicionaTarefa")
 	public String adiciona(@Valid Tarefa tarefa, BindingResult result) {
 		if (result.hasFieldErrors("descricao")) {
+
 			return "tarefa/formulario";
 		}
-
-		TarefaService dao = new TarefaService();
-		dao.addTarefa(tarefa);
+		new TarefaService().addTarefa(tarefa);
 
 		return "tarefa/adicionada";
 	}
 
-	@RequestMapping("listaTarefas")
+	@RequestMapping(value = { "listaTarefas", "" })
 	public String lista(Model model) {
 		model.addAttribute("tarefas", new TarefaService().getTarefas());
+
 		return "tarefa/lista";
+	}
+
+	@RequestMapping("alteraTarefa")
+	public String altera(@Valid Tarefa tarefa, BindingResult result) {
+		if (result.hasFieldErrors()) {
+
+			return "tarefa/mostra";
+		}
+		new TarefaService().alteraTarefa(tarefa);
+		return "redirect:listaTarefa";
+	}
+
+	@RequestMapping("mostraTarefa")
+	public String mostra(Long id, Model model) {
+		model.addAttribute("tarefa", new TarefaService().getTarefaById(id));
+
+		return "tarefa/mostra";
+	}
+
+	@RequestMapping("removeTarefa")
+	public String remove(Tarefa tarefa) {
+
+		new TarefaService().removeTarefaById(tarefa.getId());
+
+		return "redirect:listaTarefas";
 	}
 }
