@@ -9,9 +9,11 @@
     http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- para informar onde ficaram os servlets controller -->
-	<context:component-scan base-package="tarefas.controller" />
+	<!-- para informar onde ficaram os servlets controller Os problemas se deram aqui-->
+	<!-- <context:component-scan base-package="tarefas.controller" />-->
+	<context:component-scan base-package="tarefas" />
 	<mvc:annotation-driven />
+
 
 	<!-- para determinar onde encontrar o jsp's de view e seu sufixo .jsp -->
 	<bean
@@ -26,13 +28,9 @@
 		<property name="basename" value="/WEB-INF/resources/messages"></property>
 	</bean>
 
-	<!-- para encontrar as mensagens de validacao 
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-		<property name="validationMessageSource" ref="tarefas/validation/ValidationMessages" />
-	</bean>
-	http://stackoverflow.com/questions/24124799/spring-custom-validation-message
-	-->
+	<!-- para encontrar as mensagens de validacao <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"> 
+		<property name="validationMessageSource" ref="tarefas/validation/ValidationMessages" 
+		/> </bean> http://stackoverflow.com/questions/24124799/spring-custom-validation-message -->
 
 	<!-- intercepta mudancas de idioma no cookie -->
 	<bean id="localeChangeInterceptor"
@@ -46,6 +44,7 @@
 		<property name="defaultLocale" value="en" />
 	</bean>
 
+	<!-- mapeamento de interceptadores caso aja troca de idioma -->
 	<bean id="handlerMapping"
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
@@ -53,5 +52,11 @@
 		</property>
 	</bean>
 
-
+	<!-- cria uma conexao com o banco de dados mysql -->
+	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/caelumJavaWeb" />
+		<property name="username" value="caelum" />
+		<property name="password" value="123" />
+	</bean>
 </beans>

@@ -9,24 +9,35 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.mysql.jdbc.Statement;
 
 import tarefas.exception.LogicaDeNegocioException;
 
+@Component
 public class TarefaDAO {
 
 	private Connection conn;
-	private PreparedStatement stmt = null;
-
-	public TarefaDAO(Connection conn) {
-		this.conn = conn;
+	private PreparedStatement stmt;
+	
+	@Autowired
+	public TarefaDAO(DataSource dataSource) {
+		try {
+			this.conn = dataSource.getConnection();
+		} catch (SQLException e) {
+			throw new LogicaDeNegocioException("Erro ao conectar com o baco de dados: " + e);
+		}
 	}
 
 	public void addTarefa(Tarefa tarefa) throws SQLException {
 		String sql = "insert into tarefas " + "(descricao, finalizado, dataFinalizacao)" + "values(?, ?, ?)";
 
 		try {
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, tarefa.getDescricao());
 			stmt.setBoolean(2, tarefa.isFinalizado());
@@ -35,8 +46,6 @@ public class TarefaDAO {
 			stmt.execute();
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao inserir tarefa: " + e);
-		} finally {
-			closeConnection();
 		}
 	}
 
@@ -58,9 +67,7 @@ public class TarefaDAO {
 			return tarefas;
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao recuperar tarefas: " + e);
-		} finally {
-			closeConnection();
-		}
+		} 
 	}
 
 	public Tarefa getTarefaById(Long id) throws SQLException {
@@ -79,8 +86,6 @@ public class TarefaDAO {
 			}
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao recuperar tarefa pelo id: " + e);
-		} finally {
-			closeConnection();
 		}
 		return null;
 	}
@@ -103,12 +108,10 @@ public class TarefaDAO {
 			return tarefas;
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("Erro ao buscar por tarefas: " + e);
-		} finally {
-			closeConnection();
 		}
 	}
 
-	public void removeById(Long id) throws SQLException {
+	public void removeTarefaById(Long id) throws SQLException {
 		try {
 			String sql = "delete from tarefas where id=?";
 
@@ -134,8 +137,6 @@ public class TarefaDAO {
 
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao remover tarefa: " + e);
-		} finally {
-			closeConnection();
 		}
 	}
 
@@ -158,8 +159,6 @@ public class TarefaDAO {
 			stmt.execute();
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("Erro ao salvar tarefa: " + e);
-		} finally {
-			closeConnection();
 		}
 	}
 

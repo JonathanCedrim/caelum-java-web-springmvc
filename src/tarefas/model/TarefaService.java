@@ -4,49 +4,60 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import tarefas.exception.LogicaDeNegocioException;
 
+@Component
 public class TarefaService {
 	
-	TarefaDAO dao = new TarefaDAO(ConnectionFactory.getConnection());
 	
-	public void addTarefa(Tarefa tarefa){
-		try{
+	private TarefaDAO dao;
+	
+	@Autowired	
+	public TarefaService(TarefaDAO dao) {
+		this.dao = dao;
+	}
+	
+	public void addTarefa(Tarefa tarefa) {
+		try {
 			dao.addTarefa(tarefa);
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao adicionar tarefa: " + e);
 		}
 	}
-	
-	public void removeTarefaById(Long id){
+
+	public void removeTarefaById(Long id) {
 		try {
-			dao.removeById(id);
+			dao.removeTarefaById(id);
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao remover tarefa pelo id: " + e);
 		}
 	}
-	
-	public List<Tarefa> getTarefas(){
+
+	public List<Tarefa> getTarefas() {
 		try {
 			return dao.getTarefas();
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao recuperar tarefas: +" + e);
 		}
 	}
-	
-	public Tarefa getTarefaById(Long id){
+
+	public Tarefa getTarefaById(Long id) {
 		try {
 			return dao.getTarefaById(id);
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao recuperar tarefa pelo id: " + e);
 		}
 	}
-	
-	public List<Tarefa> findByData(Date data){
+
+	public List<Tarefa> findByData(Date data) {
 		try {
 			return dao.findTarefaByData(data);
 		} catch (SQLException e) {
-			throw new LogicaDeNegocioException("erro ao recuperar tarefas pela data: "+ e);
+			throw new LogicaDeNegocioException("erro ao recuperar tarefas pela data: " + e);
 		}
 	}
+	
 }
