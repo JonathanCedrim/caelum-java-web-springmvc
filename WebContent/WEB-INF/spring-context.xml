@@ -10,10 +10,17 @@
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<!-- para informar onde ficaram os servlets controller Os problemas se deram aqui-->
-	<!-- <context:component-scan base-package="tarefas.controller" />-->
+	<!-- <context:component-scan base-package="tarefas.controller" />
+	<context:component-scan base-package="login" />-->
+	
 	<context:component-scan base-package="tarefas" />
 	<mvc:annotation-driven />
 
+     <!-- registra no spring o interceptador, para capturar acesso do usuario
+     se quiser executar em alguma ordem a linha de interceptadores e so colocar aqui na sequencia -->
+	<mvc:interceptors>
+	<bean class="tarefas.login.AutorizadorInterceptor"></bean>
+	</mvc:interceptors>
 
 	<!-- para determinar onde encontrar o jsp's de view e seu sufixo .jsp -->
 	<bean
@@ -59,4 +66,6 @@
 		<property name="username" value="caelum" />
 		<property name="password" value="123" />
 	</bean>
+	
+
 </beans>

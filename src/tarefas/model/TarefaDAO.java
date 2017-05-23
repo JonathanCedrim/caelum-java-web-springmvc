@@ -121,8 +121,6 @@ public class TarefaDAO {
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new LogicaDeNegocioException("erro ao remover contato: " + e);
-		} finally {
-			closeConnection();
 		}
 	}
 
@@ -175,14 +173,5 @@ public class TarefaDAO {
 		tarefa.setDataFinalizacao(c);
 
 		return tarefa;
-	}
-
-	private void closeConnection() throws SQLException {
-		if (this.stmt != null) {
-			stmt.close();
-		}
-		if (this.conn != null) {
-			conn.close();
-		}
 	}
 }
