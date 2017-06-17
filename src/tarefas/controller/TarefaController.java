@@ -2,11 +2,11 @@ package tarefas.controller;
 
 import java.sql.SQLException;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +15,8 @@ import tarefas.dao.TarefaDao;
 import tarefas.model.Tarefa;
 
 //avisa que é para gerenciar a transação ao spring
-@Transactional
 @Controller
+@Transactional
 public class TarefaController {
 
 	@Autowired
